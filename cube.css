@@ -1,0 +1,125 @@
+.gallery {
+  /* Set these from the properties on the `flip-gallery` */
+  --gallery-color: #121212;
+  --caption-bg-color: #4d4d4d;
+  --caption-text-color: #b8b8b8;  
+}
+
+/* Some day CSS4 color functions will be in browsers, and we can
+    just use the `gallery-color` attribute on the `flip-gallery` */
+@supports (color: color(var(--gallery-color) contrast(45%))) {
+  .gallery {
+    --caption-bg-color: color(var(--gallery-color) lightness(30%));
+    --caption-text-color: color(var(--gallery-color) contrast(45%));
+  }
+}
+
+
+.gallery {
+  --item-width: 800px;
+  --item-height: 600px;
+  --trans-duration: 1s;
+  --trans-duration-mod: 0.7s;
+  --trans-curve: cubic-bezier(0.65, -0.25, 0.35, 1.25);
+}
+
+.gallery,
+.gallery * {
+  box-sizing: border-box;
+}
+
+.gallery {
+  min-height: 100vh;
+  background: var(--gallery-color);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  font: 20px/2em sans-serif;
+  
+}
+
+.gallery-item {
+  flex-basis: var(--item-width);
+  margin-bottom: calc(0.1 * var(--item-height));
+  background-color: transparent;
+}
+  
+.gallery figure {
+  width: var(--item-width);
+  height: var(--item-height);
+  position: relative;
+  transition-property: transform;
+  transition-duration: var(--trans-duration);
+  transition-timing-function: var(--trans-curve);
+}    
+
+.gallery figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50%;
+  backface-visibility: hidden;
+  transition-property: filter;
+  transition-duration: var(--trans-duration-mod);
+  transition-timing-function: var(--trans-curve);
+  filter: brightness(1);
+}
+    
+.gallery figcaption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--caption-bg-color);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  text-align: center;
+  border: 20px solid transparent;
+}  
+
+.gallery figcaption > * {
+  display: block;
+  color: var(--caption-text-color);
+}
+
+@media screen and (max-width: 600px) {
+  .gallery {
+    font-size: 12px;
+  }
+}
+
+
+/*    3-D stuff */
+.gallery .gallery-item {
+  perspective: var(--item-width);
+}
+
+.gallery figure {
+  z-index: -1;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(-0.5 * var(--item-height)));
+}
+
+.gallery img {
+  transform: rotateY(0deg) translateZ(calc(0.5 * var(--item-height)));
+}
+
+.gallery figcaption {
+  backface-visibility: hidden;
+  transform: rotateX(90deg) translateZ(calc(0.5 * var(--item-height)));
+}
+
+.gallery .gallery-item:hover figure,
+.gallery .gallery-item.show-caption figure {
+  z-index: 2;
+  transform: translateZ(calc(-0.5 * var(--item-height))) rotateX(-90deg);
+}
+.gallery .gallery-item:hover img,
+.gallery .gallery-item.show-caption img {
+  filter: brightness(0.2);
+}
