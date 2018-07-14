@@ -57,5 +57,22 @@
 </flip-gallery>
 
   <script src="cube.js"></script>
+  <script>
+    const flipGalleryElement = document.querySelector('flip-gallery')
+    const demoTag = document.querySelector('.demo-flip-gallery-tag')
+    const inputs = Array.from(demoTag.querySelectorAll('input'))
+    inputs.forEach(i => {
+      i.value = flipGalleryElement.getAttribute(i.id)
+      i.addEventListener('change', e => {
+        console.log(e.currentTarget.value)
+      })
+    })
+    const select = demoTag.querySelector('select')
+    const selectOptions = Array.from(select.options)
+    const index = selectOptions.findIndex(el => {
+      return el.value === flipGalleryElement.getAttribute(select.id)
+    })
+    select.selectedIndex = index
+  </script>
 </body>
 </html>
