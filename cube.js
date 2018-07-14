@@ -52,7 +52,7 @@ class FlipGallery extends HTMLElement {
           just use the "gallery-color" attribute on the "flip-gallery" */
       @supports (color: color(var(--gallery-color) contrast(45%))) {
         :host .gallery {
-          --caption-bg-color: color(var(--gallery-color) lightness(30%));
+          --caption-bg-color: color(var(--gallery-color) lightness(30%) alpha(85%));
           --caption-text-color: color(var(--gallery-color) contrast(45%));
         }
       }
@@ -137,6 +137,8 @@ class FlipGallery extends HTMLElement {
       @media screen and (max-width: 600px) {
         :host .gallery {
           font-size: 12px;
+          --item-width: 100vmin !important;
+          --item-height: 100vmin !important;
         }
       }
       
@@ -160,15 +162,43 @@ class FlipGallery extends HTMLElement {
         backface-visibility: hidden;
         transform: rotateX(90deg) translateZ(calc(0.5 * var(--item-height)));
       }
-      
-      :host .gallery-item:hover figure,
-      :host .gallery-item.show-caption figure {
+
+
+      /* transition-style = "classic" (default) */
+      :host .gallery-item:hover figure {
         z-index: 2;
         transform: translateZ(calc(-0.5 * var(--item-height))) rotateX(-90deg);
       }
-      :host .gallery-item:hover img,
-      :host .gallery-item.show-caption img {
+
+      /* transition-style = "push" */
+      :host([transition-style="push"]) .gallery-item figcaption {
+        background-color: var(--caption-bg-color-push);
+        transform: rotateX(90deg) translateZ(calc(0.7 * var(--item-height)));
+        transition-property: all;
+        transition-duration: var(--trans-duration);
+        transition-timing-function: var(--trans-curve);
+      }
+      
+      :host([transition-style="push"]) .gallery-item img {
+        transform: rotateY(0deg) translateZ(calc(0 * var(--item-height)));
+        transition-property: all;
+        transition-duration: var(--trans-duration);
+        transition-delay: calc(var(--trans-duration-mod) * 0.25);
+      }
+      
+      :host([transition-style="push"]) .gallery-item:hover figcaption {
+        transition-delay: calc(var(--trans-duration-mod) * 0.25);
+        transform: rotateX(0deg);
+      }
+
+      :host([transition-style="push"]) .gallery-item:hover img {
         filter: brightness(0.2);
+        transition-delay: 0s;
+        transform: translateZ(calc(-0.2 * var(--item-height)));
+      }
+
+      :host([transition-style="push"]) .gallery-item figure {
+        transform: none;
       }
     `
     return styleEl
@@ -177,8 +207,9 @@ class FlipGallery extends HTMLElement {
   setGalleryProperties() {
     const attrs = this.getAttributeNames() 
     attrs.forEach(a => {
-      this.gallery.style.setProperty(`--${a}`, this.getAttribute(a))          
+      this.gallery.style.setProperty(`--${a}`, this.getAttribute(a))
     })
+    this.gallery.style.setProperty('--caption-bg-color-push', `${this.gallery.style.getPropertyValue('--caption-bg-color')}85`)
   }
   
   appendItems(items) {
