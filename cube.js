@@ -1,7 +1,7 @@
 class FlipGallery extends HTMLElement {
   static get observedAttributes() {
     return [
-      'item-width',
+      'columns',
       'item-height',
       'gallery-color',
       'caption-bg-color',
@@ -59,7 +59,7 @@ class FlipGallery extends HTMLElement {
       
       
       :host .gallery {
-        --item-width: 800px;
+        --columns: 3;
         --item-height: 600px;
         --trans-duration: 1s;
         --trans-duration-mod: 0.7s;
@@ -75,18 +75,14 @@ class FlipGallery extends HTMLElement {
         overflow: hidden;
         min-height: 100vh;
         background: var(--gallery-color);
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: center;
         font: 20px/2em sans-serif;
-        
+        display: grid;
+        grid-template-columns: repeat(var(--columns), 1fr);
+        grid-template-rows: min-content;
+        grid-gap: 1vmin;
       }
       
       :host .gallery-item {
-        flex-basis: var(--item-width);
-        margin-bottom: calc(0.1 * var(--item-height));
         background-color: transparent;
       }
         
@@ -138,7 +134,6 @@ class FlipGallery extends HTMLElement {
       @media screen and (max-width: 600px) {
         :host .gallery {
           font-size: 12px;
-          --item-width: 100vmin !important;
           --item-height: 100vmin !important;
         }
       }
@@ -146,7 +141,7 @@ class FlipGallery extends HTMLElement {
       
       /*    3-D stuff */
       :host .gallery-item {
-        perspective: var(--item-width);
+        perspective: calc(100vw / var(--columns));
       }
       
       :host figure {
