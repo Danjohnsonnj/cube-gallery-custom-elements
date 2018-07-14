@@ -11,41 +11,59 @@
 </head>
 <body>
   <style>
-      .demo-flip-gallery-tag {
+      .demo {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 13px;
+        line-height: 1.2em;
+      }
+      .demo > div {
+        padding: 2vh 2vw;
+      }
+      .demo pre {
+        display: inline;
+        font-family: 'Courier New', Courier, monospace;
+        text-transform: uppercase;
+      }
+      .flip-gallery-tag {
         padding: 2vh 2vw;
         background-color: gray;
         color: ghostwhite;
       }
-      .demo-flip-gallery-tag,
-      .demo-flip-gallery-tag input,
-      .demo-flip-gallery-tag select {
+      .flip-gallery-tag,
+      .flip-gallery-tag input,
+      .flip-gallery-tag select {
         font-size: 11px;
         line-height: 2em;
         font-family: 'Courier New', Courier, monospace;
       }
-      .demo-flip-gallery-tag input,
-      .demo-flip-gallery-tag select {
+      .flip-gallery-tag input,
+      .flip-gallery-tag select {
         width: 5em;
         height: 2em;
         border-width: 0;
       }
-      .demo-flip-gallery-tag select {
+      .flip-gallery-tag select {
         width: 7em;
       }
   </style>
-  <div class="demo-flip-gallery-tag">
-    &lt;flip-gallery
-    item-width="<input type="text" id="item-width" />"
-    item-height="<input type="text" id="item-height" />"
-    gallery-color="<input type="text" id="gallery-color" />"
-    caption-bg-color="<input type="text" id="caption-bg-color" />"
-    caption-text-color="<input type="text" id="caption-text-color" />"
-    transition-style="<select id="transition-style">
-      <option value="default">default</option>
-      <option value="push">push</option>
-      </select>" &gt;
-    <div>[...]</div>
-    &lt;/flip-gallery&gt;
+  <div class="demo">
+    <div>
+      Below is a representation of the <pre>flip-gallery</pre> custom element. Change the "attributes" in this representation to see how the custom element behaves.
+    </div>
+    <div class="flip-gallery-tag">
+      &lt;flip-gallery
+      item-width="<input type="text" id="item-width" />"
+      item-height="<input type="text" id="item-height" />"
+      gallery-color="<input type="text" id="gallery-color" />"
+      caption-bg-color="<input type="text" id="caption-bg-color" />"
+      caption-text-color="<input type="text" id="caption-text-color" />"
+      transition-style="<select id="transition-style">
+        <option value="default">default</option>
+        <option value="push">push</option>
+        </select>" &gt;
+      <div>[...]</div>
+      &lt;/flip-gallery&gt;
+    </div>
   </div>
 <flip-gallery item-width="40vmin" item-height="40vmin" gallery-color="#121212" caption-bg-color="#4d4d4d" caption-text-color="#b8b8b8" transition-style="push">
   <img src="https://images.unsplash.com/photo-1518639401307-b20d68513079?fit=crop&w=1600&q=80" data-credit-name="Jandré van der Walt" data-credit-link="https://unsplash.com/@jandrevdw" />
@@ -59,20 +77,15 @@
   <script src="cube.js"></script>
   <script>
     const flipGalleryElement = document.querySelector('flip-gallery')
-    const demoTag = document.querySelector('.demo-flip-gallery-tag')
-    const inputs = Array.from(demoTag.querySelectorAll('input'))
+    const demoTag = document.querySelector('.flip-gallery-tag')
+    const inputs = Array.from(demoTag.querySelectorAll('input, select'))
     inputs.forEach(i => {
       i.value = flipGalleryElement.getAttribute(i.id)
       i.addEventListener('change', e => {
-        console.log(e.currentTarget.value)
+        console.log(e.currentTarget.id, e.currentTarget.value)
+        flipGalleryElement.setAttribute(e.currentTarget.id, e.currentTarget.value)
       })
     })
-    const select = demoTag.querySelector('select')
-    const selectOptions = Array.from(select.options)
-    const index = selectOptions.findIndex(el => {
-      return el.value === flipGalleryElement.getAttribute(select.id)
-    })
-    select.selectedIndex = index
   </script>
 </body>
 </html>
