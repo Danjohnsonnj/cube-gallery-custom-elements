@@ -72,6 +72,7 @@ class FlipGallery extends HTMLElement {
       }
       
       :host .gallery {
+        overflow: hidden;
         min-height: 100vh;
         background: var(--gallery-color);
         display: flex;
@@ -209,7 +210,10 @@ class FlipGallery extends HTMLElement {
     attrs.forEach(a => {
       this.gallery.style.setProperty(`--${a}`, this.getAttribute(a))
     })
-    this.gallery.style.setProperty('--caption-bg-color-push', `${this.gallery.style.getPropertyValue('--caption-bg-color')}85`)
+    let figcolor = this.gallery.style.getPropertyValue('--caption-bg-color')
+    if (figcolor.includes('#', 0)) {
+      this.gallery.style.setProperty('--caption-bg-color-push', `${figcolor}85`)
+    }
   }
   
   appendItems(items) {
