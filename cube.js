@@ -11,6 +11,15 @@ class FlipGallery extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     this.setGalleryProperties()
+    const transDur = this.gallery.style.getPropertyValue('--trans-duration')
+    if (!transDur) {
+      return
+    }
+    this.gallery.style.setProperty('--trans-duration', '0s')
+    this.setGalleryProperties()
+    window.setTimeout(() => {
+      this.gallery.style.setProperty('--trans-duration', transDur)
+    }, 2000)
   }
 
   constructor() {
@@ -259,4 +268,11 @@ class FlipGallery extends HTMLElement {
   }
 
 }
-customElements.define('flip-gallery', FlipGallery)
+if ('customElements' in window) {
+  customElements.define('flip-gallery', FlipGallery)
+} else {
+  const tooBad = document.createElement('div')
+  tooBad.style.cssText = 'background-color: #000; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: #fff; font-family: monospace; font-size: 5vmin;'
+  tooBad.innerHTML = '<p>This browser does not support Custom&nbsp;Elements.</p><p>Check out the support <a href="https://caniuse.com/#feat=custom-elementsv1" target="_blank">here</a>.</p>'
+  document.querySelector('flip-gallery').replaceWith(tooBad)
+}
