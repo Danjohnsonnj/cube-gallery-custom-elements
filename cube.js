@@ -146,7 +146,7 @@ class FlipGallery extends HTMLElement {
       
       /*    3-D stuff */
       :host .gallery-item {
-        perspective: var(--item-height);
+        perspective: 100vmax;
       }
       
       :host figure {
