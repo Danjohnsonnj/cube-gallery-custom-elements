@@ -11,15 +11,6 @@ class FlipGallery extends HTMLElement {
 
   attributeChangedCallback(name, oldValue, newValue) {
     this.setGalleryProperties()
-    const transDur = this.gallery.style.getPropertyValue('--trans-duration')
-    if (!transDur) {
-      return
-    }
-    this.gallery.style.setProperty('--trans-duration', '0s')
-    this.setGalleryProperties()
-    window.setTimeout(() => {
-      this.gallery.style.setProperty('--trans-duration', transDur)
-    }, 2000)
   }
 
   constructor() {
