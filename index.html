@@ -13,18 +13,33 @@
   <style>
     .demo {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      font-size: 13px;
+      font-size: 20px;
       line-height: 1.2em;
     }
 
-    .demo>div {
+    .demo > div:first-child {
       padding: 2vh 2vw;
+      width: 34em;
     }
 
     .demo pre {
       display: inline;
       font-family: 'Courier New', Courier, monospace;
       text-transform: uppercase;
+    }
+
+    .demo a {
+      display: inline-block;
+      color: #000;
+      text-decoration: underline wavy rgb(255, 175, 0);
+      transition: all 0.1s ease-in-out;
+      background: rgba(255, 175, 0, 0);
+      padding: 0.2em;
+      margin: -0.2em;
+    }
+
+    .demo a:hover {
+      background: rgb(255, 175, 0);
     }
 
     .flip-gallery-tag {
@@ -36,16 +51,27 @@
     .flip-gallery-tag,
     .flip-gallery-tag input,
     .flip-gallery-tag select {
-      font-size: 11px;
+      font-size: 16px;
       line-height: 2em;
       font-family: 'Courier New', Courier, monospace;
+    }
+
+    .flip-gallery-tag em {
+      font-weight: 900;
     }
 
     .flip-gallery-tag input,
     .flip-gallery-tag select {
       width: 5em;
       height: 2em;
-      border-width: 0;
+      background-color: rgb(255, 220, 145);
+      border: 0.2em solid rgb(255, 175, 0);
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .flip-gallery-tag input#columns {
+      width: 2em;
     }
 
     .flip-gallery-tag select {
@@ -54,21 +80,21 @@
   </style>
   <div class="demo">
     <div>
-      Below is a representation of the
-      <pre>flip-gallery</pre> custom element. Change the "attributes" in this representation to see how the custom element behaves.
+      Below is a representation of a <pre>flip-gallery</pre> <a href="https://developers.google.com/web/fundamentals/web-components/customelements" target="_blank">custom element</a>.
+      Change the "attributes" in this representation to see how the custom element behaves.
     </div>
     <div class="flip-gallery-tag">
       &lt;flip-gallery
-        columns="<input type="text" id="columns" />"
-        item-height="<input type="text" id="item-height" />"
-        gallery-color="<input type="text" id="gallery-color" />"
-        caption-bg-color="<input type="text" id="caption-bg-color" />"
-        caption-text-color="<input type="text" id="caption-text-color" />"
-        transition-style="<select id="transition-style">
+        <em>columns</em>="<input type="text" id="columns" />"
+        <em>item-height</em>="<input type="text" id="item-height" />"
+        <em>gallery-color</em>="<input type="text" id="gallery-color" />"
+        <em>caption-bg-color</em>="<input type="text" id="caption-bg-color" />"
+        <em>caption-text-color</em>="<input type="text" id="caption-text-color" />"
+        <em>transition-style</em>="<select id="transition-style">
           <option value="default">default</option>
           <option value="push">push</option>
         </select>" &gt;
-      <div>[...]</div>
+      <div style="margin-left: 2em;">[...images]</div>
       &lt;/flip-gallery&gt;
     </div>
   </div>

@@ -80,9 +80,11 @@ class FlipGallery extends HTMLElement {
         grid-template-columns: repeat(var(--columns), 1fr);
         grid-template-rows: min-content;
         grid-gap: 1vmin;
+        padding: 1vmin;
       }
       
       :host .gallery-item {
+        cursor: all-scroll;
         background-color: transparent;
       }
         
@@ -141,7 +143,7 @@ class FlipGallery extends HTMLElement {
       
       /*    3-D stuff */
       :host .gallery-item {
-        perspective: calc(100vw / var(--columns));
+        perspective: var(--item-height);
       }
       
       :host figure {
