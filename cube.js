@@ -99,12 +99,13 @@ class FlipGallery extends HTMLElement {
       }    
       
       :host figure img {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
         display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: 50%;
-        backface-visibility: hidden;
         transition-property: filter;
         transition-duration: var(--trans-duration-mod);
         transition-timing-function: var(--trans-curve);
@@ -112,6 +113,8 @@ class FlipGallery extends HTMLElement {
       }
           
       :host figcaption {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
         position: absolute;
         top: 0;
         left: 0;
@@ -252,7 +255,7 @@ class FlipGallery extends HTMLElement {
     this.slotEl.addEventListener('slotchange', e => {
       this.appendItems(this.slotEl.assignedNodes())
     });
-    
+    this.appendItems(this.slotEl.assignedNodes())
   }
 
 }
